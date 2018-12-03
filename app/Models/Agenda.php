@@ -37,6 +37,13 @@ class Agenda extends Model
 {
     protected $table = 'agenda';
 
+    protected $fillable = [
+        'alumno',
+        'no_control',
+        'proyecto',
+        'fecha',
+    ];
+
     public function estado()
     {
         return $this->belongsTo(

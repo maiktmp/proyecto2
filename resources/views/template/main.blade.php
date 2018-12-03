@@ -10,6 +10,7 @@
     <!-- Style sheets -->
     @include('template.global_css')
     @stack('css')
+
 </head>
 <body>
 @include('components.header')
@@ -21,6 +22,7 @@
         @yield('content')
     </div>
 </div>
+
 @include('components.footer')
 @include('template.global_js')
 @stack('scripts')

@@ -11,6 +11,14 @@ class UsuariosSeeder extends Seeder
      */
     public function run()
     {
+        DB::table('estado')->insert([
+            ['nombre' => 'Pendiente'],
+            ['nombre' => 'Aceptado'],
+            ['nombre' => 'Rechazado'],
+            ['nombre' => 'Solicitud de cancelación'],
+            ['nombre' => 'Cancelado'],
+        ]);
+
         DB::table('rol')->insert([
             ['nombre' => 'Administrador'],
             ['nombre' => 'Profesor']

@@ -19,7 +19,7 @@
                                         </li>
                                     @else
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="#">Agenda</a>
+                                            <a class="nav-link" href="{{route('calendar_show')}}">Agenda</a>
                                         </li>
                                     @endif
 

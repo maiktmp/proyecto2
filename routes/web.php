@@ -30,7 +30,6 @@ Route::get(
 )->name('logout');
 
 
-
 Route::get(
     '/profesores',
     'UsuarioController@index'
@@ -50,3 +49,23 @@ Route::post(
     '/profesores/agregar',
     'UsuarioController@agregarPost'
 )->name('profesores_agregar_post');
+
+
+////////////////////////////////////////////////
+///         Calendar routes
+///////////////////////////////////////////////
+
+Route::get(
+    '/profesores/agenda',
+    'AgendaController@calendar'
+)->name('calendar_show');
+
+Route::post(
+    '/profesores/agenda',
+    'AgendaController@calendarPost'
+)->name('calendar_post');
+
+Route::get(
+    '/profesores/agendas',
+    'AgendaController@getEvents'
+)->name('calendar_events');

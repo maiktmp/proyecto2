@@ -42,3 +42,6 @@
 .color-white {
     color: #ffffff;
 }
+.fc-scroller{
+    height: 100%!important;
+}
