@@ -78,4 +78,9 @@ class Usuario extends Authenticatable
     {
         return $this->fk_id_rol == 2;
     }
+
+    public function getFullNameAttribute()
+    {
+        return $this->nombre . ' ' . $this->apellidoP . ' ' . $this->apellidoM;
+    }
 }

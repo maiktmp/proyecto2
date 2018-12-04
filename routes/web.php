@@ -69,3 +69,18 @@ Route::get(
     '/profesores/agendas',
     'AgendaController@getEvents'
 )->name('calendar_events');
+
+Route::get(
+    '/admin/agendas',
+    'AgendaController@getAllEvents'
+)->name('calendar_all_events');
+
+Route::get(
+    '/admin/status',
+    'AgendaController@mapStatusAdmin'
+)->name('admin_status');
+
+Route::post(
+    '/admin/{agendaId}/update',
+    'AgendaController@updateStatusAdmin'
+)->name('admin_status_update');

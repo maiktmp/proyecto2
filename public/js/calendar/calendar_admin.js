@@ -1,19 +1,7 @@
 $(document).ready(function () {
-    var events = [
-        {
-            title: 'Event Title1',
-            start: '2018-12-03T08:08:55.008',
-            end: '2018-12-03T09:09:55.008'
-        }, {
-            title: 'Event Title1',
-            start: '2018-12-03T13:09:55.008',
-            end: '2018-12-03T18:10:55.008'
-        }, {
-            title: 'Event Title1',
-            start: '2018-12-03T13:10:55.008',
-            end: '2018-12-03T18:11:55.008'
-        }
-    ];
+
+
+    var events = [];
 
     var $divCalendar = $('#calendar');
 
@@ -138,16 +126,30 @@ $(document).ready(function () {
                             "</div>" +
                             "<input name=\"fecha\" id=\"fecha\" value=\"" + datePicker.format() + "\" hidden>\n";
 
-                        $('#form-content').html($form);
-                        $('#modal-agenda').modal("toggle");
+                        //$('#form-content').html($form);
+                        //$('#modal-agenda').modal("toggle");
                     }
                 });
             },
-            eventClick: function ( event, jsEvent, view) {
-                
+            eventClick: function (event, jsEvent, view) {
+                console.log(event);
+                console.log(eventsD);
+                console.log(jsEvent);
+                console.log(view);
+                var $html = $('<p>').html(
+                    "Asesor: <b>" + event.asesor + "</b> <br>" +
+                    "Proyecto: <b>" + event.titulo + "</b> <br>" +
+                    "Alumno: <b>" + event.alumno + "</b> <br>" +
+                    "No. Control: <b>" + event.no_control + "</b> <br>"
+                );
+
+                $("#div-agenda-detail").html($html);
+                $("#modal-status").modal("toggle");
+                var $url = $("#form-status").attr('action');
+                $url = $url.replace('FAKE_ID', event.id);
+                $("#form-status").attr('action', $url);
             }
         });
-
         var $html = "    <div>\n" +
             "                    <div class=\"row\">\n" +
             "                        <div class=\"col\">\n" +
