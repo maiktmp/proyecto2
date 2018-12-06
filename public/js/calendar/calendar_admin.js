@@ -25,6 +25,7 @@ $(document).ready(function () {
                 });
                 // eventsD = events;
                 calendar();
+
             }
         });
     }
@@ -148,6 +149,14 @@ $(document).ready(function () {
                 var $url = $("#form-status").attr('action');
                 $url = $url.replace('FAKE_ID', event.id);
                 $("#form-status").attr('action', $url);
+
+                if (event.status === 4) {
+                    $('#state_cancel').attr('disabled', false).show().parent().show();
+                    $('#state_all').attr('disabled', true).hide().parent().hide();
+                } else {
+                    $('#state_cancel').attr('disabled', true).hide().parent().hide();
+                    $('#state_all').attr('disabled', false).show().parent().show();
+                }
             }
         });
         var $html = "    <div>\n" +
@@ -164,7 +173,11 @@ $(document).ready(function () {
             "                                </tr>\n" +
             "                                <tr>\n" +
             "                                    <td><i style=\"color:#b1002c\" class=\"fas fa-tint\"></i></td>\n" +
-            "                                    <td>&nbsp; Rechazado</td>\n" +
+            "                                    <td>&nbsp; Rechazado/Cancelado</td>\n" +
+            "                                </tr>\n" +
+            "                                <tr>\n" +
+            "                                    <td><i style=\"color:#ffa500\" class=\"fas fa-tint\"></i></td>\n" +
+            "                                    <td>&nbsp; Solicitud de cancelación</td>\n" +
             "                                </tr>\n" +
             "                            </table>\n" +
             "                        </div>\n" +
@@ -186,12 +199,40 @@ $(document).ready(function () {
                 )
         );
         $('[data-toggle="popover"]').popover();
+        ajaxEvents();
     }
 
     ajax();
-    console.log(eventsD);
-    console.log(events);
-    // fullCalendar;
 
-})
-;
+
+    function ajaxEvents() {
+        $.ajax({
+            async: false,
+            url: $("#inp-url-pending").val(),
+            dataType: 'json',
+            success: function (response) {
+                var $list = $("#list-events");
+                var count = 0;
+                response.forEach(function (event) {
+                    count++;
+                    var $span = $('<span>', {
+                        'class': 'fas fa-circle',
+                        'style': 'color:' + event.color
+                    });
+                    var $a = $('<a>', {
+                        'class': 'dropdown-item event-pending',
+                        'href': '#',
+                        'date': event.fecha
+                    }).append($span).append('&nbsp;').append('<b>' + event.usuario.nombre + '</b>' + " " + event.fecha);
+                    $list.append($a);
+                });
+                $('#count-pending').append($('<span>', {'class': 'badge badge-danger'}).append(count));
+            }
+        });
+    }
+
+    $('.event-pending').click(function (event) {
+        var date = $(this).attr('date');
+        $divCalendar.fullCalendar('gotoDate', new Date(date));
+    });
+});

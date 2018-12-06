@@ -14,9 +14,7 @@ $(document).ready(function () {
             end: '2018-12-03T18:11:55.008'
         }
     ];
-
     var $divCalendar = $('#calendar');
-
     var eventsD = [];
 
     function ajax() {
@@ -143,11 +141,16 @@ $(document).ready(function () {
                     }
                 });
             },
-            eventClick: function ( event, jsEvent, view) {
-                
+            eventClick: function (event, jsEvent, view) {
+                var userId = $("#inp-user-log").val() * 1;
+                if (event.status === 2 && userId === event.userId) {
+                    $("#modal-profesor").modal("toggle");
+                    var $url = $("#form-status-profesor").attr('action');
+                    $url = $url.replace('FAKE_ID', event.id);
+                    $("#form-status-profesor").attr('action', $url);
+                }
             }
         });
-
         var $html = "    <div>\n" +
             "                    <div class=\"row\">\n" +
             "                        <div class=\"col\">\n" +
@@ -162,7 +165,11 @@ $(document).ready(function () {
             "                                </tr>\n" +
             "                                <tr>\n" +
             "                                    <td><i style=\"color:#b1002c\" class=\"fas fa-tint\"></i></td>\n" +
-            "                                    <td>&nbsp; Rechazado</td>\n" +
+            "                                    <td>&nbsp; Rechazado/Cancelado</td>\n" +
+            "                                </tr>\n" +
+            "                                <tr>\n" +
+            "                                    <td><i style=\"color:#ffa500\" class=\"fas fa-tint\"></i></td>\n" +
+            "                                    <td>&nbsp; Solicitud de cancelación</td>\n" +
             "                                </tr>\n" +
             "                            </table>\n" +
             "                        </div>\n" +

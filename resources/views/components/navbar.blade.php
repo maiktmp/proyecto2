@@ -29,7 +29,19 @@
                                 @if(Auth::check())
                                     @if(Auth::user()->esAdmin())
                                         <li class="nav-item active">
-                                            <a class="nav-link" href="{{route('calendar_show')}}">Agenda</a>
+                                            <div class="btn-group">
+                                                <a class="nav-link" href="{{route('calendar_show')}}">Agenda</a>
+                                                <button type="button"
+                                                        id="count-pending"
+                                                        class="btn btn-primary dropdown-toggle dropdown-toggle-split"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                    <span class="sr-only">Toggle Dropdown</span>
+                                                </button>
+                                                <div class="dropdown-menu" id="list-events">
+
+                                                </div>
+                                            </div>
                                         </li>
                                         <li class="nav-item active">
                                             <a class="nav-link" href="{{ route('profesores_index') }}">Profesores</a>
@@ -38,10 +50,7 @@
                                         <li class="nav-item active">
                                             <a class="nav-link" href="{{route('calendar_show')}}">Agenda</a>
                                         </li>
-
                                     @endif
-
-
                                     <li class="nav-item active" style="margin-right: auto">
                                         <a class="nav-link" href="{{ route('logout') }}">Cerrar sesión</a>
                                     </li>

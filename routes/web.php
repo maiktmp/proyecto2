@@ -84,3 +84,8 @@ Route::post(
     '/admin/{agendaId}/update',
     'AgendaController@updateStatusAdmin'
 )->name('admin_status_update');
+
+Route::get(
+    '/admin/pending',
+    'AgendaController@getPendingEvents'
+)->name('admin_pending');

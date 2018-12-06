@@ -62,7 +62,7 @@ class AgendaController extends Controller
                     $color = "#b1002c";
                     break;
                 case 4:
-                    $color = "#f59563";
+                    $color = "#ffa500";
                     break;
                 case 5:
                     $color = "#b1002c";
@@ -71,11 +71,12 @@ class AgendaController extends Controller
             $id = $agenda->id;
             $evento = [
                 'id' => $id,
-                'title' => $title. " - " . $agenda->usuario->nombre,
+                'title' => $title . " - " . $agenda->usuario->nombre,
                 'start' => $start,
                 'end' => $end,
                 'color' => $color,
-                'extra' => $agenda->proyecto
+                'userId' => $agenda->fk_id_usuario,
+                'status' => $agenda->fk_id_estado
             ];
             $eventos[] = $evento;
         }
@@ -113,7 +114,7 @@ class AgendaController extends Controller
                     $color = "#b1002c";
                     break;
                 case 4:
-                    $color = "#f59563";
+                    $color = "#ffa500";
                     break;
                 case 5:
                     $color = "#b1002c";
@@ -122,10 +123,11 @@ class AgendaController extends Controller
             $id = $agenda->id;
             $evento = [
                 'id' => $id,
-                'title' => $title. " - " . $agenda->usuario->nombre,
+                'title' => $title . " - " . $agenda->usuario->nombre,
                 'start' => $start,
                 'end' => $end,
                 'color' => $color,
+                'status' => $agenda->fk_id_estado,
                 'titulo' => $agenda->proyecto,
                 'alumno' => $agenda->alumno,
                 'no_control' => $agenda->no_control,
@@ -143,13 +145,57 @@ class AgendaController extends Controller
             ->pluck('nombre', 'id');
     }
 
+    public static function mapStatusProfe()
+    {
+        return Estado::whereIn('id', [4])
+            ->get()
+            ->pluck('nombre', 'id');
+    }
+
+    public static function mapStatusAdminCancel()
+    {
+        return Estado::whereIn('id', [5])
+            ->get()
+            ->pluck('nombre', 'id');
+    }
+
     public function updateStatusAdmin(Request $request, $agendaId)
     {
+//        return dd($request->all());
         $agenda = Agenda::find($agendaId);
         $agenda->fk_id_estado = $request->input('fk_id_estado');
 
         if ($agenda->save()) {
             return redirect()->route('calendar_show');
         }
+    }
+
+    public function getPendingEvents()
+    {
+        $events = Agenda::whereIn('fk_id_estado', [1, 4])->get();
+        foreach ($events as $event) {
+            $event->fecha = Carbon::make($event->fecha)->format('Y-m-d');
+            $event->usuario;
+            $color = 0;
+            switch ($event->fk_id_estado) {
+                case 1:
+                    $color = "#f59563";
+                    break;
+                case 2:
+                    $color = "#6dbb47";
+                    break;
+                case 3:
+                    $color = "#b1002c";
+                    break;
+                case 4:
+                    $color = "#ffa500";
+                    break;
+                case 5:
+                    $color = "#b1002c";
+                    break;
+            }
+            $event->color = $color;
+        }
+        return $events;
     }
 }
