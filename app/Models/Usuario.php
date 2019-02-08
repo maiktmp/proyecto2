@@ -37,6 +37,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Usuario whereTelefono($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Usuario whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Usuario whereUsuario($value)
+ * @property-read mixed $full_name
  */
 class Usuario extends Authenticatable
 {

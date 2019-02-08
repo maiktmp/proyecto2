@@ -9,11 +9,12 @@
 namespace App\Http\Controllers;
 
 
+use App\Mail\Titulación;
 use App\Models\Agenda;
 use App\Models\Estado;
-use App\Models\Usuario;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Mail;
 
 class AgendaController extends Controller
 {
@@ -25,12 +26,13 @@ class AgendaController extends Controller
 
     public function calendarPost(Request $request)
     {
-//        return dd($request->all());
+        $fecha = str_replace('T', ' ', $request->input('fecha'));
+        $fecha = Carbon::createFromFormat('Y-m-d H:i:s', $fecha);
+        $request->merge(["fecha" => $fecha]);
         $agenda = new Agenda();
         $agenda->fill($request->all());
         $agenda->fk_id_usuario = \Auth::user()->id;
         $agenda->fk_id_estado = 1;
-
         if ($agenda->save()) {
             return redirect()->route('calendar_show');
         }
@@ -164,8 +166,10 @@ class AgendaController extends Controller
 //        return dd($request->all());
         $agenda = Agenda::find($agendaId);
         $agenda->fk_id_estado = $request->input('fk_id_estado');
-
         if ($agenda->save()) {
+            if ($agenda->fk_id_estado != 4) {
+                $this->sendMail($agenda);
+            }
             return redirect()->route('calendar_show');
         }
     }
@@ -197,5 +201,17 @@ class AgendaController extends Controller
             $event->color = $color;
         }
         return $events;
+    }
+
+    /**
+     * @param $agenda Agenda
+     */
+    public function sendMail($agenda)
+    {
+//        $agenda = Agenda::find(1);
+//        return view('mail.mail', ['agenda' => $agenda]);
+//        return dd($agenda->alumno_email);
+        Mail::to($agenda->usuario->correo)
+            ->send(new Titulación($agenda));
     }
 }

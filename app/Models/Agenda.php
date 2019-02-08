@@ -32,16 +32,19 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Agenda whereNoControl($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Agenda whereProyecto($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Agenda whereUpdatedAt($value)
+ * @property string|null $alumno_email
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Models\Agenda whereAlumnoEmail($value)
  */
 class Agenda extends Model
 {
     protected $table = 'agenda';
-
+    protected $dates = ['fecha'];
     protected $fillable = [
         'alumno',
         'no_control',
         'proyecto',
         'fecha',
+        'alumno_email'
     ];
 
     public function estado()

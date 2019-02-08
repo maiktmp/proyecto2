@@ -43,6 +43,7 @@ class CrateProjectSchema extends Migration
         Schema::create('agenda', function (Blueprint $table) {
             $table->increments('id');
             $table->string('alumno');
+            $table->string('alumno_email');
             $table->string('no_control', 10);
             $table->string('proyecto');
             $table->dateTime('fecha');

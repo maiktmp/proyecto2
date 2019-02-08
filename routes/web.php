@@ -89,3 +89,8 @@ Route::get(
     '/admin/pending',
     'AgendaController@getPendingEvents'
 )->name('admin_pending');
+
+Route::get(
+    '/email',
+    'AgendaController@sendMail'
+)->name('send_mail');

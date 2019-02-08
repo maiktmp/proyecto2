@@ -134,6 +134,15 @@ $(document).ready(function () {
                             "</div>" +
                             "</div>" +
                             "</div>" +
+                            "</div>" +
+                            "<div class=\"row \">\n" +
+                            "<div class=\"col-12 \">\n" +
+                            "<div class=\"form-group \">\n" +
+                            "<label for=\"username\" class=\"control-label\">Correo del alumno</label>\n" +
+                            "<input class=\"form-control\" name=\"alumno_email\" type=\"email\" id=\"alumno_email\" required>\n" +
+                            "</div>" +
+                            "</div>" +
+                            "</div>" +
                             "<input name=\"fecha\" id=\"fecha\" value=\"" + datePicker.format() + "\" hidden>\n";
 
                         $('#form-content').html($form);

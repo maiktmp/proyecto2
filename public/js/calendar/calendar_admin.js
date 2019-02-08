@@ -124,7 +124,6 @@ $(document).ready(function () {
                             "<input class=\"form-control\" name=\"no_control\" type=\"number\" id=\"no_control\" required>\n" +
                             "</div>" +
                             "</div>" +
-                            "</div>" +
                             "<input name=\"fecha\" id=\"fecha\" value=\"" + datePicker.format() + "\" hidden>\n";
 
                         //$('#form-content').html($form);
