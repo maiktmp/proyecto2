@@ -21,7 +21,11 @@ class AgendaController extends Controller
 
     public function calendar()
     {
-        return view('calendar.calendar');
+        $events = Agenda::whereFkIdEstado(2)->get();
+        $filtered = $events->filter(function ($agenda, $key) {
+            return ($agenda->fecha < Carbon::now()->addDay()) && $agenda->fecha > Carbon::now();
+        });
+        return view('calendar.calendar', ["events" => $filtered]);
     }
 
     public function calendarPost(Request $request)

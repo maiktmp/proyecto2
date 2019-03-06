@@ -1,5 +1,6 @@
 @php
-        @endphp
+    /* @var $event \App\Models\Agenda*/
+@endphp
 
 @extends('template.main', [
     'title' => 'Calendario'
@@ -20,6 +21,36 @@
                 <div id='calendar'></div>
                 <input id="inp-user-log" value="{{Auth::user()->id}}" hidden>
                 @if(Auth::user()->esAdmin())
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-12 text-center">
+                                            <h3>Eventos próximos</h3>
+                                            <hr>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        @forelse($events as $event)
+                                           <div class="col">
+                                               <div class="alert alert-success" role="alert">
+                                                   <b>Proyecto:</b> {{$event->proyecto}} <br>
+                                                   <b>Profesor:</b> {{$event->usuario->full_name}} <br>
+                                                   <b>Alumno:</b> {{$event->alumno}} <br>
+                                                   <b>Hora:</b> {{$event->fecha->format('d/m/Y H:i')}} <br>
+                                               </div>
+                                           </div>
+                                        @empty
+                                            <div class="col-12 text-center">
+                                                <span>No hay eventos próximos</span>
+                                            </div>
+                                        @endforelse
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <input id="inp-url-events"
                            type="hidden"
                            value="{{route('calendar_all_events')}}">
